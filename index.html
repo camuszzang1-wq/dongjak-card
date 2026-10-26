@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>동작 혜택카드</title>
+<title>주민 안내메모</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Sans+KR:wght@600;700&display=swap">
 <style>
 /* Layout: 직원 모드 = 2단(붙여넣기 → 카드 편집 → 발급), 주민 모드 = 1단 카드 목록. 공공 안내지 느낌의 차가운 회백 바탕 + 진한 청록 강조. */
@@ -127,8 +127,8 @@ body.is-res{font-size:19px;line-height:1.7;background:var(--res-bg)}
 <div class="wrap">
   <header class="top">
     <div>
-      <h1>동작 혜택카드</h1>
-      <p class="sub">상담에서 고른 혜택을 주민 휴대전화로 보내는 카드로 만듭니다</p>
+      <h1>주민 안내메모</h1>
+      <p class="sub">상담에서 안내한 혜택을, 종이 메모 대신 주민 휴대전화로 보내 드립니다</p>
     </div>
     <p class="sub">동작구청 스마트정책팀 · 시범</p>
   </header>
@@ -137,18 +137,18 @@ body.is-res{font-size:19px;line-height:1.7;background:var(--res-bg)}
   <main id="staff" class="steps">
     <section class="step" id="step1">
       <div class="step-h"><span class="no">1</span><h2>에이전트 답변 붙여넣기</h2></div>
-      <p class="hint">'동작 맞춤혜택 찾기'에 <b>"카드로 만들어줘"</b>라고 하면 나오는 [카드] 블록을 그대로 붙입니다. 혜택 표를 붙여도 읽습니다. 아래는 예시입니다.</p>
+      <p class="hint">'동작 맞춤혜택 찾기'에 <b>"주민 메모 써줘"</b>라고 하면 나오는 [메모] 내용을 통째로 복사해 붙입니다. 혜택 표를 붙여도 읽습니다. 아래는 예시입니다.</p>
       <textarea id="paste" aria-label="에이전트 답변 붙여넣기"></textarea>
       <div class="row">
-        <button class="btn primary" id="parseBtn">카드 읽기</button>
-        <button class="btn" id="addBtn">빈 카드 추가</button>
+        <button class="btn primary" id="parseBtn">붙여넣은 내용 읽기</button>
+        <button class="btn" id="addBtn">혜택 직접 추가</button>
         <button class="btn" id="clearBtn">모두 지우기</button>
         <span class="hint" id="parseMsg"></span>
       </div>
     </section>
 
     <section class="step" id="step2">
-      <div class="step-h"><span class="no">2</span><h2>카드 고르기·다듬기</h2></div>
+      <div class="step-h"><span class="no">2</span><h2>메모에 넣을 혜택 고르기</h2></div>
       <p class="hint">주민에게 보낼 것만 체크합니다. 전화·링크는 근거 자료에 있는 것만 두고, 없으면 비워 둡니다.</p>
       <div class="cards" id="cards"></div>
       <div class="grid2">
@@ -168,21 +168,21 @@ body.is-res{font-size:19px;line-height:1.7;background:var(--res-bg)}
         <label class="f" id="issuerEtcWrap" hidden><span>부서명</span><input id="issuerEtc" placeholder="예: 복지정책과 복지정책팀"></label>
         <label class="f"><span>발급처 전화 (선택)</span><input id="issuerTel" placeholder="02-820-0000" inputmode="tel"></label>
         <label class="f"><span>발급일</span><input id="issueDate" type="date"></label>
-        <label class="f" style="grid-column:1/-1"><span>주민에게 한마디 (선택 · 이름 등 개인정보는 쓰지 않습니다)</span><input id="memo" placeholder="예: 서류는 신분증만 챙겨 오시면 됩니다"></label>
+        <label class="f" style="grid-column:1/-1"><span>담당자 한마디 (선택 · 이름 등 개인정보는 쓰지 않습니다)</span><input id="memo" placeholder="예: 서류는 신분증만 챙겨 오시면 됩니다"></label>
       </div>
     </section>
 
     <section class="step" id="step3">
-      <div class="step-h"><span class="no">3</span><h2>주민용 카드 만들기</h2></div>
+      <div class="step-h"><span class="no">3</span><h2>주민에게 메모 보내기</h2></div>
       <div class="row no-print">
-        <button class="btn primary" id="makeBtn">QR·링크 만들기</button>
+        <button class="btn primary" id="makeBtn">메모 QR 만들기</button>
         <button class="btn" id="copyTextBtn">카톡용 글 복사</button>
         <button class="btn" id="printBtn">인쇄</button>
         <button class="btn" id="previewBtn">주민 화면 미리보기</button>
       </div>
       <div class="issue" id="issue" hidden>
         <div style="display:grid;gap:10px;min-width:0">
-          <p><b>주민 휴대전화로 이 QR을 찍게 하세요.</b> 카드 화면이 열리고, 전화·신청 버튼과 "카카오톡으로 보내기"가 있습니다.</p>
+          <p><b>주민 휴대전화로 이 QR을 찍게 하세요.</b> 안내 메모가 열리고, 전화·신청 버튼과 "카카오톡으로 보내기"가 있습니다.</p>
           <div class="link" id="linkOut"></div>
           <div class="row no-print">
             <button class="btn small" id="copyLinkBtn">링크 복사</button>
@@ -207,7 +207,7 @@ body.is-res{font-size:19px;line-height:1.7;background:var(--res-bg)}
   <!-- ===== 주민 모드 ===== -->
   <main id="resident" class="res" hidden>
     <header class="rhead">
-      <span class="eyebrow">동작구 맞춤혜택 안내</span>
+      <span class="eyebrow">담당자가 드리는 안내 메모</span>
       <h1 id="rTitle">받으실 수 있는 혜택을 정리했습니다</h1>
       <p class="meta" id="rMeta"></p>
     </header>
@@ -234,7 +234,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 const $=s=>document.querySelector(s);
 const FIELDS={'혜택명':'n','구분':'g','한줄':'s','설명':'s','내용':'s','신청처':'a','전화':'t','문의':'t','링크':'u','준비물':'p','확인':'c','확인할 것':'c'};
 const GROUPS=['동작구','서울시','중앙'];
-const EXAMPLE=`[카드]
+const EXAMPLE=`[메모]
 혜택명: 서울형 긴급복지지원
 구분: 서울시
 한줄: 실직·질병 등 갑작스러운 위기에 생계·주거·의료비를 먼저 지원
@@ -243,8 +243,8 @@ const EXAMPLE=`[카드]
 링크:
 준비물: 신분증, 임대차계약서, 통장 사본
 확인: 소득·재산 기준은 복지팀에서 확인
-[/카드]
-[카드]
+[/메모]
+[메모]
 혜택명: 국민취업지원제도
 구분: 중앙
 한줄: 구직활동 지원과 취업지원 서비스, 요건에 따라 구직촉진수당
@@ -253,8 +253,8 @@ const EXAMPLE=`[카드]
 링크: https://www.kua.go.kr
 준비물: 신분증
 확인: 실업급여 수급 여부에 따라 참여 유형이 달라짐
-[/카드]
-[카드]
+[/메모]
+[메모]
 혜택명: 동작구 무료법률상담
 구분: 동작구
 한줄: 월세·임금 등 생활 법률 문제를 변호사에게 무료로 상담
@@ -263,7 +263,7 @@ const EXAMPLE=`[카드]
 링크:
 준비물: 관련 서류 (계약서 등)
 확인: 상담 요일·시간은 법무팀에 확인
-[/카드]`;
+[/메모]`;
 
 let cards=[];
 let isExample=true;
@@ -273,7 +273,7 @@ function clean(v){ v=(v||'').trim(); if(/^(없음|-|–|—|해당\s*없음|근�
 function normGroup(g){ g=(g||'').replace(/\s/g,''); if(/동작/.test(g)) return '동작구'; if(/서울/.test(g)) return '서울시'; if(/중앙|국가|정부|전국/.test(g)) return '중앙'; return g||'중앙'; }
 function fixUrl(u){ u=clean(u); if(!u) return ''; if(!/^https?:\/\//i.test(u)) u='https://'+u; try{ new URL(u); return u; }catch(e){ return ''; } }
 function parseBlocks(text){
-  const out=[]; const re=/\[카드\]([\s\S]*?)\[\/카드\]/g; let m;
+  const out=[]; const re=/\[(?:카드|메모)\]([\s\S]*?)\[\/(?:카드|메모)\]/g; let m;
   while((m=re.exec(text))){
     const o={};
     m[1].split(/\r?\n/).forEach(line=>{
@@ -299,7 +299,7 @@ function norm(o){ return { on:true, n:clean(o.n).replace(/\*\*/g,''), g:normGrou
 /* ---------- 직원 모드 렌더 ---------- */
 function renderCards(){
   const box=$('#cards'); box.innerHTML='';
-  if(!cards.length){ box.innerHTML='<p class="hint">아직 카드가 없습니다. 1번에서 "카드 읽기"를 누르거나 빈 카드를 추가하세요.</p>'; return; }
+  if(!cards.length){ box.innerHTML='<p class="hint">아직 넣은 혜택이 없습니다. 1번에서 "붙여넣은 내용 읽기"를 누르거나 혜택을 직접 추가하세요.</p>'; return; }
   cards.forEach((c,i)=>{
     const el=document.createElement('div'); el.className='ecard'+(c.on?'':' off');
     el.innerHTML=`
@@ -354,19 +354,19 @@ const RES_URL='https://splendid-sorbet-71bd86.netlify.app/';
 function baseUrl(){ const f=$('#baseUrl'); if(f.value.trim()) return f.value.trim(); return RES_URL; }
 async function makeLink(){
   const p=payload();
-  if(!p.c.length){ note('보낼 카드를 하나 이상 체크하세요.'); return; }
+  if(!p.c.length){ note('메모에 넣을 혜택을 하나 이상 체크하세요.'); return; }
   if(!p.i){ note('발급처(동 주민센터 또는 부서)를 선택하세요. 주민이 어디서 받은 안내인지 알 수 있어야 합니다.'); return; }
   const tok=await encode(p); const url=baseUrl().replace(/#.*$/,'')+'#'+tok;
   $('#linkOut').textContent=url; $('#issue').hidden=false; $('#issueNote').hidden=true;
-  $('#sizeMsg').textContent=`카드 ${p.c.length}개 · 링크 ${url.length}자`;
-  try{ const qr=qrcode(0,'M'); qr.addData(url,'Byte'); qr.make(); $('#qrOut').innerHTML=qr.createSvgTag({cellSize:4,margin:2,scalable:true}); if(qr.getModuleCount()>105) $('#sizeMsg').textContent+=' · QR이 촘촘합니다. 카드를 5개 이하로 줄이면 더 잘 찍힙니다.'; }
-  catch(e){ $('#qrOut').innerHTML=''; note('내용이 많아 QR에 담기지 않습니다. 카드를 줄이거나 설명을 짧게 하세요. 링크 복사는 그대로 쓸 수 있습니다.'); }
-  if(isExample) note('지금 카드는 예시입니다. 실제 상담 내용으로 바꾼 뒤 발급하세요.');
+  $('#sizeMsg').textContent=`혜택 ${p.c.length}개 · 링크 ${url.length}자`;
+  try{ const qr=qrcode(0,'M'); qr.addData(url,'Byte'); qr.make(); $('#qrOut').innerHTML=qr.createSvgTag({cellSize:4,margin:2,scalable:true}); if(qr.getModuleCount()>105) $('#sizeMsg').textContent+=' · QR이 촘촘합니다. 혜택을 5개 이하로 줄이면 더 잘 찍힙니다.'; }
+  catch(e){ $('#qrOut').innerHTML=''; note('내용이 많아 QR에 담기지 않습니다. 혜택 수를 줄이거나 설명을 짧게 하세요. 링크 복사는 그대로 쓸 수 있습니다.'); }
+  if(isExample) note('지금 내용은 예시입니다. 실제 상담 내용으로 바꾼 뒤 보내세요.');
   $('#issue').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function note(msg){ const n=$('#issueNote'); n.textContent=msg; n.hidden=false; }
 function kakaoText(p){
-  const lines=[`[동작구 맞춤혜택 안내] ${p.i||''} · ${p.d||''}`.trim()];
+  const lines=[`[동작구 안내 메모] ${p.i||''} · ${p.d||''}`.trim()];
   if(p.m) lines.push(p.m);
   p.c.forEach((c,i)=>{ let l=`${i+1}. ${c.n}(${c.g})`; if(c.s) l+=` — ${c.s}`; lines.push(l);
     const sub=[]; if(c.a) sub.push('신청: '+c.a); if(c.t) sub.push('☎ '+c.t); if(c.p) sub.push('준비물: '+c.p); if(sub.length) lines.push('   '+sub.join(' / ')); if(c.u) lines.push('   '+c.u); });
@@ -385,10 +385,10 @@ const ICON_GO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 function renderResident(p){
   $('#staff').hidden=true; $('#resident').hidden=false; document.querySelector('.top').hidden=true; document.body.classList.add('is-res');
   const n=(p.c||[]).length;
-  $('#rTitle').textContent=`받으실 수 있는 혜택 ${n}가지를 정리했습니다`;
-  $('#rMeta').textContent=`${p.i||'동작구'} · ${p.d?p.d.replace(/^(\d{4})-(\d{2})-(\d{2})$/,(m,y,mo,d)=>`${y}년 ${+mo}월 ${+d}일`):''}`;
+  $('#rTitle').textContent=`안내해 드린 혜택 ${n}가지를 적어 드립니다`;
+  $('#rMeta').textContent=`${p.i||'동작구'}에서 · ${p.d?p.d.replace(/^(\d{4})-(\d{2})-(\d{2})$/,(m,y,mo,d)=>`${y}년 ${+mo}월 ${+d}일`):''}`;
   $('#rIssuer').textContent=(p.i||'동작구')+(p.t?' '+p.t:'');
-  if(p.m){ $('#rMemo').textContent=p.m; $('#rMemo').hidden=false; }
+  if(p.m){ $('#rMemo').textContent='담당자 한마디 — '+p.m; $('#rMemo').hidden=false; }
   const box=$('#rCards'); box.innerHTML='';
   (p.c||[]).forEach((c,i)=>{
     const el=document.createElement('article'); el.className='rcard';
@@ -406,7 +406,7 @@ function renderResident(p){
   const url=location.href;
   $('#shareBtn').onclick=async()=>{
     const text=kakaoText(p);
-    if(navigator.share){ try{ await navigator.share({title:'동작구 맞춤혜택 안내',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+    if(navigator.share){ try{ await navigator.share({title:'동작구 안내 메모',text,url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
     copy(text+'\n'+url,'내용과 링크를 복사했습니다. 카카오톡에 붙여 넣으세요.');
   };
   $('#rCopyBtn').onclick=()=>copy(url,'링크를 복사했습니다');
@@ -423,19 +423,19 @@ async function boot(){
   $('#issueDate').value=new Date().toISOString().slice(0,10);
   $('#baseUrl').value=RES_URL;
   $('#paste').value=EXAMPLE; cards=parseBlocks(EXAMPLE); renderCards();
-  $('#parseMsg').textContent='예시 카드 3개를 읽었습니다.';
+  $('#parseMsg').textContent='예시 혜택 3개를 읽었습니다.';
   $('#parseBtn').addEventListener('click',()=>{ const t=$('#paste').value; let got=parseBlocks(t); if(!got.length) got=parseTable(t);
-    if(!got.length){ $('#parseMsg').textContent='[카드] 블록이나 혜택 표를 찾지 못했습니다.'; return; }
-    cards=got; isExample=(t.trim()===EXAMPLE.trim()); renderCards(); invalidate(); $('#parseMsg').textContent=`카드 ${got.length}개를 읽었습니다.`; });
+    if(!got.length){ $('#parseMsg').textContent='[메모] 내용이나 혜택 표를 찾지 못했습니다. 에이전트 답변을 통째로 붙여 보세요.'; return; }
+    cards=got; isExample=(t.trim()===EXAMPLE.trim()); renderCards(); invalidate(); $('#parseMsg').textContent=`혜택 ${got.length}개를 읽었습니다.`; });
   $('#addBtn').addEventListener('click',()=>{ cards.push(norm({n:'',g:'동작구'})); isExample=false; renderCards(); invalidate(); });
   $('#clearBtn').addEventListener('click',()=>{ cards=[]; $('#paste').value=''; isExample=false; renderCards(); invalidate(); $('#parseMsg').textContent=''; });
   $('#issuer').addEventListener('change',e=>{ $('#issuerEtcWrap').hidden=e.target.value!=='__etc'; invalidate(); });
   ['#issuerEtc','#issuerTel','#issueDate','#memo','#baseUrl'].forEach(s=>$(s).addEventListener('input',invalidate));
   $('#makeBtn').addEventListener('click',makeLink);
   $('#copyLinkBtn').addEventListener('click',()=>copy($('#linkOut').textContent,'링크를 복사했습니다'));
-  $('#copyTextBtn').addEventListener('click',()=>{ const p=payload(); if(!p.c.length){ note('보낼 카드를 하나 이상 체크하세요.'); return; } copy(kakaoText(p),'카톡용 글을 복사했습니다'); });
-  $('#printBtn').addEventListener('click',()=>{ if($('#issue').hidden){ note('먼저 "QR·링크 만들기"를 누르세요.'); return; } try{ window.print(); }catch(e){} });
-  $('#previewBtn').addEventListener('click',async()=>{ const p=payload(); if(!p.c.length){ note('보낼 카드를 하나 이상 체크하세요.'); return; } if(!p.i) p.i='(발급처 미선택)'; renderResident(p);
+  $('#copyTextBtn').addEventListener('click',()=>{ const p=payload(); if(!p.c.length){ note('메모에 넣을 혜택을 하나 이상 체크하세요.'); return; } copy(kakaoText(p),'카톡용 글을 복사했습니다'); });
+  $('#printBtn').addEventListener('click',()=>{ if($('#issue').hidden){ note('먼저 "메모 QR 만들기"를 누르세요.'); return; } try{ window.print(); }catch(e){} });
+  $('#previewBtn').addEventListener('click',async()=>{ const p=payload(); if(!p.c.length){ note('메모에 넣을 혜택을 하나 이상 체크하세요.'); return; } if(!p.i) p.i='(발급처 미선택)'; renderResident(p);
     const back=document.createElement('button'); back.className='btn no-print'; back.textContent='← 직원 화면으로'; back.style.justifySelf='start';
     back.addEventListener('click',()=>{ $('#resident').hidden=true; $('#staff').hidden=false; document.querySelector('.top').hidden=false; document.body.classList.remove('is-res'); back.remove(); $('#rMemo').hidden=true; });
     $('#resident').prepend(back); window.scrollTo({top:0}); });
