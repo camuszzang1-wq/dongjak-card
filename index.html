@@ -340,7 +340,8 @@ function payload(){
   const o={v:1,d:$('#issueDate').value,c:slim}; const i=issuerName(); if(i) o.i=i; const t=$('#issuerTel').value.trim(); if(t) o.t=t; const m=$('#memo').value.trim(); if(m) o.m=m;
   return o;
 }
-function baseUrl(){ const f=$('#baseUrl'); if(f.value.trim()) return f.value.trim(); return location.origin+location.pathname; }
+const RES_URL='https://splendid-sorbet-71bd86.netlify.app/';
+function baseUrl(){ const f=$('#baseUrl'); if(f.value.trim()) return f.value.trim(); return RES_URL; }
 async function makeLink(){
   const p=payload();
   if(!p.c.length){ note('보낼 카드를 하나 이상 체크하세요.'); return; }
@@ -406,7 +407,7 @@ async function boot(){
   }
   // 직원 모드
   $('#issueDate').value=new Date().toISOString().slice(0,10);
-  $('#baseUrl').value=location.origin+location.pathname;
+  $('#baseUrl').value=RES_URL;
   $('#paste').value=EXAMPLE; cards=parseBlocks(EXAMPLE); renderCards();
   $('#parseMsg').textContent='예시 카드 3개를 읽었습니다.';
   $('#parseBtn').addEventListener('click',()=>{ const t=$('#paste').value; let got=parseBlocks(t); if(!got.length) got=parseTable(t);
